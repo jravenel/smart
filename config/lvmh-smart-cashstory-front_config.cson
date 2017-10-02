@@ -1,0 +1,989 @@
+﻿slidePdfEnabled: true
+embedCharts: true
+dashboardPdfEnabled: false
+captureChartEnabled: true
+comments: true
+sharingOptions: true
+settings:
+  requesters: [
+    {
+      id: "requesterBG"
+      type: "dropdown"
+      defaultSelected: "Group"
+      query: [
+        {
+          $match:
+            domain: "positions_accounts"
+        }
+        {
+          $group:
+            _id: "$BG"
+        }
+        {
+          $sort:
+            _id: 1
+        }
+      ]
+      fields: [
+        "_id"
+      ]
+      slides: [
+        1031
+      ]
+    }
+    {
+      id: "requesterBU"
+      type: "dropdown"
+      query: [
+        {
+          $match:
+            domain: "positions_accounts"
+            BG: "<%= requestersManager.requesterBG %>"
+        }
+        {
+          $group:
+            _id: "$BU"
+        }
+      ]
+      fields: [
+        "_id"
+      ]
+      slides: [
+        1031
+      ]
+    }
+    {
+      id: "requesterEntity"
+      type: "dropdown"
+      query: [
+        {
+          $match:
+            domain: "positions_accounts"
+            BU: "<%= requestersManager.requesterBU %>"
+        }
+        {
+          $group:
+            _id: "$Entity"
+        }
+      ]
+      fields: [
+        "_id"
+      ]
+      slides: [
+        1031
+      ]
+    }
+  ]
+glossary:
+  terms: [
+    {
+      term: "Cash Position"
+      meaning: "is the total cash consolidated of the company. It is the sum of the cash in bank account and the cash investments (standard deposits, certificate deposits, mutual funds...) "
+    }
+    {
+      term: "Debt Position"
+      meaning: "is the total debt consolidated of the company. It is the sum of all the instruments that enables financing of the company."
+    }
+    {
+      term: "Net Treasury Position"
+      meaning: "is the difference between the Cash Position and the Debt Position."
+    }
+    {
+      term: "Regions"
+      meaning: "is the term used to aggregate entities for geographical or business analytical purpose."
+    }
+  ]
+  title: "Glossary"
+slides: [
+  {
+    id: 0
+    level: 0
+  }
+  {
+    title: "Treasury"
+    id: 10
+    level: 1
+  }
+  {
+    title: "(Zoom) Treasury"
+    id: 20
+    level: 0
+  }
+  {
+    title: "Financial Debt"
+    id: 30
+    level: 1
+  }
+  {
+    title: "Market Data"
+    id: 40
+    level: 1
+  }
+  {
+    level: 3
+    title: "Last Publication"
+    chartOptions:
+      chartType: "text"
+      src: "lvmh_documents-financiers_"
+    parent_id: 40
+    id: 109
+  }
+  {
+    id: 100
+    title: "All"
+    level: 3
+    parent_id: 10
+    linkTo: [
+      {
+        type: "dashboard"
+        id: 0
+        legend: "<i class=\"fa fa-search-minus\" aria-hidden=\"true\"></i>"
+      }
+      {
+        type: "slide"
+        id: 1001
+        legend: "<i class=\"fa fa-search-plus\" aria-hidden=\"true\"></i>"
+      }
+    ]
+    source: 'Source: SyRUS Corporate Finance, <%= requestersManager.SCENARIOS.CURRENT %>'
+    filters:
+      "bottom-right":
+        on: "Breakdown"
+        type: "buttons"
+    chartOptions:
+      requesters:
+        "upper-right":
+          id:"nature"
+          query: 
+            domain: "positions_all"
+          fields:[
+              "COA_L1"
+          ]
+          type: "dropdown"
+      sort: "desc"
+      packs: "Pack"
+      value: "Value"
+      label: "Label"
+      packNames: true
+      # variationLegend: "Evolution<br>vs m-1"
+      variation: "Growth"
+      sparklines:
+        prefix: "sparkline"
+        legend: "Monthly Evolution"
+        unit: " "
+      units:
+        Value: " M€"
+      chartType: "horizontalBarchart"
+      data:
+        query:
+          domain: "positions_all"
+          "ENTITIES":"<%= report.entityName %>"
+          "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+          # "Pack":"Ranking by Segments"
+        precision:
+          Value: ",.1f"
+          Growth: ",.1f"
+    highlightedKpis:[
+      name: "Total"
+      unit:" M€"
+      badge: 'evolution'
+      # comment: "<%=\' \' + comparison  %>"
+      sentiment:
+        comparison:
+          domain: [0]
+          range: ['negative','positive']
+      value: "value"
+      data:
+        value:
+          query:[
+            $match:
+              domain: "positions_all"
+              "ENTITIES":"<%= report.entityName %>"
+              "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+              "Pack":"Ranking by Segments"
+          ,
+            $group:
+              _id:null
+              value:$sum:"$Value"
+          ,
+            $project:
+              value:1
+          ]
+          field: "value"
+
+        # comparison:
+        #   query:[
+        #       domain: "positions_bybanks"
+        #       "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+        #       "ENTITIES":"<%= report.entityName %>"
+        #       "COA_L1":"<%= requestersManager.branchrequest0 %>"
+        #       "COUNTERPART_L1":"<%= requestersManager.branchrequest0A %>"
+        #   ,
+        #     $group:
+        #       _id:null
+        #       value:$sum:"$Value"
+        #   ,
+        #     $project:
+        #       value:1
+        #   ]
+        #   field: "Growth"
+      precision:
+        value: ',.2f'
+        comparison: '+,.0%'
+    ]
+  }
+  {
+    id: 101
+    title: "Cash positions"
+    level: 3
+    parent_id: 10
+    linkTo: [
+      {
+        type: "dashboard"
+        id: 0
+        legend: "<i class=\"fa fa-search-minus\" aria-hidden=\"true\"></i>"
+      }
+      {
+        type: "slide"
+        id: 1001
+        legend: "<i class=\"fa fa-search-plus\" aria-hidden=\"true\"></i>"
+      }
+    ]
+    source: 'Source: SyRUS Corporate Finance, <%= requestersManager.SCENARIOS.CURRENT %>'
+    filters:
+      "bottom-right":
+        on: "Breakdown"
+        type: "buttons"
+    chartOptions:
+      requesters:
+        "upper-right":
+          id:"nature"
+          query: 
+            domain: "positions_all"
+          fields:[
+              "COA_L1"
+          ]
+          type: "dropdown"
+      sort: "desc"
+      packs: "Pack"
+      value: "Value"
+      label: "Label"
+      packNames: true
+      # variationLegend: "Evolution<br>vs m-1"
+      variation: "Growth"
+      sparklines:
+        prefix: "sparkline"
+        legend: "Monthly Evolution"
+        unit: " "
+      units:
+        Value: " M€"
+      chartType: "horizontalBarchart"
+      data:
+        query:
+          domain: "positions_all"
+          "ENTITIES":"<%= report.entityName %>"
+          "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+          "COA_L1":"Cash positions"
+          # "Pack":"Ranking by Segments"
+        precision:
+          Value: ",.1f"
+    highlightedKpis:[
+      name: "Total"
+      unit:" M€"
+      badge: 'evolution'
+      # comment: "<%=\' \' + comparison  %>"
+      sentiment:
+        comparison:
+          domain: [0]
+          range: ['negative','positive']
+      value: "value"
+      data:
+        value:
+          query:[
+            $match:
+              domain: "positions_all"
+              "ENTITIES":"<%= report.entityName %>"
+              "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+              "Pack":"Ranking by Segments"
+              "COA_L1":"Cash positions"
+          ,
+            $group:
+              _id:null
+              value:$sum:"$Value"
+          ,
+            $project:
+              value:1
+          ]
+          field: "value"
+
+        # comparison:
+        #   query:[
+        #       domain: "positions_bybanks"
+        #       "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+        #       "ENTITIES":"<%= report.entityName %>"
+        #       "COA_L1":"<%= requestersManager.branchrequest0 %>"
+        #       "COUNTERPART_L1":"<%= requestersManager.branchrequest0A %>"
+        #   ,
+        #     $group:
+        #       _id:null
+        #       value:$sum:"$Value"
+        #   ,
+        #     $project:
+        #       value:1
+        #   ]
+        #   field: "Growth"
+      precision:
+        value: ',.2f'
+        comparison: '+,.0%'
+    ]
+  }
+  {
+    id: 102
+    title: "Financial Assets"
+    level: 3
+    parent_id: 10
+    linkTo: [
+      {
+        type: "dashboard"
+        id: 0
+        legend: "<i class=\"fa fa-search-minus\" aria-hidden=\"true\"></i>"
+      }
+      {
+        type: "slide"
+        id: 1001
+        legend: "<i class=\"fa fa-search-plus\" aria-hidden=\"true\"></i>"
+      }
+    ]
+    source: 'Source: SyRUS Corporate Finance, <%= requestersManager.SCENARIOS.CURRENT %>'
+    filters:
+      "bottom-right":
+        on: "Breakdown"
+        type: "buttons"
+    chartOptions:
+      requesters:
+        "upper-right":
+          id:"nature"
+          query: 
+            domain: "positions_all"
+          fields:[
+              "COA_L1"
+          ]
+          type: "dropdown"
+      sort: "desc"
+      packs: "Pack"
+      value: "Value"
+      label: "Label"
+      packNames: true
+      # variationLegend: "Evolution<br>vs m-1"
+      variation: "Growth"
+      sparklines:
+        prefix: "sparkline"
+        legend: "Monthly Evolution"
+        unit: " "
+      units:
+        Value: " M€"
+      chartType: "horizontalBarchart"
+      data:
+        query:
+          domain: "positions_all"
+          "ENTITIES":"<%= report.entityName %>"
+          "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+          "COA_L1":"Financial assets"
+          # "Pack":"Ranking by Segments"
+        precision:
+          Value: ",.1f"
+    highlightedKpis:[
+      name: "Total"
+      unit:" M€"
+      badge: 'evolution'
+      # comment: "<%=\' \' + comparison  %>"
+      sentiment:
+        comparison:
+          domain: [0]
+          range: ['negative','positive']
+      value: "value"
+      data:
+        value:
+          query:[
+            $match:
+              domain: "positions_all"
+              "ENTITIES":"<%= report.entityName %>"
+              "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+              "Pack":"Ranking by Segments"
+              "COA_L1":"Financial assets"
+          ,
+            $group:
+              _id:null
+              value:$sum:"$Value"
+          ,
+            $project:
+              value:1
+          ]
+          field: "value"
+
+        # comparison:
+        #   query:[
+        #       domain: "positions_bybanks"
+        #       "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+        #       "ENTITIES":"<%= report.entityName %>"
+        #       "COA_L1":"<%= requestersManager.branchrequest0 %>"
+        #       "COUNTERPART_L1":"<%= requestersManager.branchrequest0A %>"
+        #   ,
+        #     $group:
+        #       _id:null
+        #       value:$sum:"$Value"
+        #   ,
+        #     $project:
+        #       value:1
+        #   ]
+        #   field: "Growth"
+      precision:
+        value: ',.1f'
+        comparison: '+,.0%'
+    ]
+  }
+  {
+    title: "By Banks"
+    id: 1001
+    level: 3
+    parent_id: 20
+    linkTo: [
+      {
+        type: "slide"
+        id: 100
+        legend: "<i class=\"fa fa-search-minus\" aria-hidden=\"true\"></i>"
+      }
+      {
+        type: "slide"
+        id: 1002
+        legend: "<i class=\"fa fa-search-plus\" aria-hidden=\"true\"></i>"
+      }
+    ]
+    source: 'Source: SyRUS Corporate Finance, <%= requestersManager.SCENARIOS.CURRENT %>'
+    filters:
+      "bottom-right":
+        on: "CURRENCIES"
+        type: "buttons"
+    chartOptions:
+      sort: "desc"
+      variation: "Growth"
+      sentiment:
+        value:
+          domain: [
+            0
+          ]
+          range: [
+            "negative"
+            "warning"
+            "positive"
+          ]
+      value: "Value"
+      label: "COUNTERPART_L2"
+      meta: [
+        "Cash Positions"
+        "Financial Assets"
+      ]
+      requesters:
+        "upper-right":
+          id:"branchrequest0"
+          query: domain: "positions_bybanks"
+          fields:[
+              "COA_L1"
+          ]
+          type: "dropdown"
+        "upper-middle":
+          id:"branchrequest0A"
+          query: domain: "positions_bybanks"
+          fields:[
+              "COUNTERPART_L1"
+          ]
+          type: "dropdown"  
+      units:
+        "Cash Positions": "UNITS"
+        "Financial Assets": "UNITS"
+        Value: "UNITS"
+        Growth: "UNITS"
+      chartType: "horizontalBarchart"
+      data:
+        query:
+          domain: "positions_bybanks"
+          "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+          "ENTITIES":"<%= report.entityName %>"
+          "COA_L1":"<%= requestersManager.branchrequest0 %>"
+          "COUNTERPART_L1":"<%= requestersManager.branchrequest0A %>"
+        precision:
+          Growth: ".1f"
+          Value: ",.1f"
+      legend: true
+    highlightedKpis:[
+      name: "Total"
+      unit:" M€"
+      badge: 'evolution'
+      sentiment:
+        comparison:
+          domain: [0]
+          range: ['negative','positive']
+      value: "value"
+      data:
+        value:
+          query:[
+            $match:
+              domain: "positions_bybanks"
+              "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+              "ENTITIES":"<%= report.entityName %>"
+              "COA_L1":"<%= requestersManager.branchrequest0 %>"
+              "COUNTERPART_L1":"<%= requestersManager.branchrequest0A %>"
+          ,
+            $group:
+              _id:null
+              value:$sum:"$Value"
+          ,
+            $project:
+              value:1
+          ]
+          field: "value"
+      precision:
+        value: ',.1f'
+        comparison: '+,.0%'
+    ]
+  }
+  {
+    title: "By Currencies"
+    id: 1002
+    level: 3
+    parent_id: 20
+    linkTo: [
+      {
+        type: "slide"
+        id: 30201
+        legend: "<i class=\"fa fa-search-minus\" aria-hidden=\"true\"></i>"
+      }
+      {
+        type: "slide"
+        id: 1035
+        legend: "<i class=\"fa fa-search-plus\" aria-hidden=\"true\"></i>"
+      }
+    ]
+    source: 'Source: SyRUS Corporate Finance, <%= requestersManager.SCENARIOS.CURRENT %>'
+    filters:
+      "bottom-right":
+        on: "CURRENCIES"
+        type: "buttons"
+    chartOptions:
+      sort: "desc"
+      variation: "Growth"
+      sentiment:
+        value:
+          domain: [
+            0
+          ]
+          range: [
+            "negative"
+            "warning"
+            "positive"
+          ]
+      value: "Value"
+      label: "COUNTERPART_L2"
+      meta: [
+        "Cash Positions"
+        "Financial Assets"
+      ]
+      requesters:
+        "upper-right":
+          id:"branchrequest0"
+          query: domain: "positions_bybanks"
+          fields:[
+              "COA_L1"
+          ]
+          type: "dropdown"
+        "upper-middle":
+          id:"branchrequest0A"
+          query: domain: "positions_bybanks"
+          fields:[
+              "COUNTERPART_L1"
+          ]
+          type: "dropdown"  
+      units:
+        "Cash Positions": "UNITS"
+        "Financial Assets": "UNITS"
+        Value: "UNITS"
+        Growth: "UNITS"
+      chartType: "horizontalBarchart"
+      data:
+        query:
+          domain: "positions_bybanks"
+          "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+          "ENTITIES":"<%= report.entityName %>"
+          "COA_L1":"<%= requestersManager.branchrequest0 %>"
+          "COUNTERPART_L1":"<%= requestersManager.branchrequest0A %>"
+        precision:
+          Growth: ".1f"
+          Value: ",.1f"
+      legend: true
+    highlightedKpis:[
+      name: "Total"
+      unit:" M€"
+      badge: 'evolution'
+      sentiment:
+        comparison:
+          domain: [0]
+          range: ['negative','positive']
+      value: "value"
+      data:
+        value:
+          query:[
+            $match:
+              domain: "positions_bybanks"
+              "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+              "ENTITIES":"<%= report.entityName %>"
+              "COA_L1":"<%= requestersManager.branchrequest0 %>"
+              "COUNTERPART_L1":"<%= requestersManager.branchrequest0A %>"
+          ,
+            $group:
+              _id:null
+              value:$sum:"$Value"
+          ,
+            $project:
+              value:1
+          ]
+          field: "value"
+      precision:
+        value: ',.1f'
+        comparison: '+,.0%'
+    ]
+  }
+  {
+    title: "by Geography"
+    source: 'Source: SyRUS Corporate Finance, <%= requestersManager.SCENARIOS.CURRENT %>'
+    level: 3
+    parent_id: 20
+    linkTo: [
+      {
+        type: "slide"
+        id: 3020123
+        legend: "<i class=\"fa fa-search-minus\" aria-hidden=\"true\"></i>"
+      }
+      {
+        type: "slide"
+        id: 3032
+        legend: "<i class=\"fa fa-search-plus\" aria-hidden=\"true\"></i>"
+      }
+    ]
+    filters:
+      "bottom-right":
+        on: "filter"
+        type: "buttons"
+    id: 1035
+    chartOptions:
+      peers: " "
+      join: "Country Code"
+      projection: "world"
+      value: "Value"
+      label: "Country Name"
+      levels: 4
+      cartoFiles:
+        " ": "world-topojson.json"
+      chartType: "carto"
+      units:
+        Value: " k€"
+      kpi: "kpi"
+      data:
+        query:
+          domain: "positions_bycountries"
+          Entity: "<%=report.entityName%>"
+      legend: true
+  }
+  {
+    level: 3
+    title: "by Availability"
+    source: 'Source: SyRUS Corporate Finance, <%= requestersManager.SCENARIOS.CURRENT %>'
+    parent_id: 20
+    linkTo: [
+      {
+        type: "slide"
+        id: 1035
+        legend: "<i class=\"fa fa-search-minus\" aria-hidden=\"true\"></i>"
+      }
+      {
+        type: "dashboard"
+        id: 0
+        legend: "<i class=\"fa fa-search-plus\" aria-hidden=\"true\"></i>"
+      }
+    ]
+    id: 3032
+    chartOptions:
+      target: "evolution"
+      sentiment:
+        evolution:
+          domain: [
+            250
+          ]
+          range: [
+            "negative"
+            "positive"
+          ]
+      color: true
+      labels: [
+        "niveau_1"
+        "niveau_2"
+        "niveau_3"
+        "niveau_4"
+      ]
+      value: "value"
+      chartType: "treemap"
+      units:
+        value: "k€"
+      sortByValues: true
+      data:
+        query:
+          domain: "cashtrapped"
+        precision:
+          target: ",.0f"
+          value: ",.0f"
+  }
+  {
+    title: "External Debt"
+    source: 'Source: SyRUS Corporate Finance, <%= requestersManager.SCENARIOS.CURRENT %>'
+    level: 3
+    charts: [
+      {
+        style: "secondary no-spots scale-colors"
+        selection:
+          serie: "poi_id"
+        id: 0
+        value: "nb"
+        legend: true
+        date: "date"
+        crossfilter:
+          on: "date"
+          datasets: [
+            1
+          ]
+        groups: "poi_id"
+        cr: 4
+        units:
+          date: ""
+          nb: " M€"
+        chartType: "linechart"
+        data:
+          date:
+            selector: "date"
+          query:
+            domain: "<%= report.id %>_32206_0"
+        size: 0.3
+      }
+      {
+        style: "gray-bg vertical-padding"
+        selection:
+          label: "poi_id"
+        id: 1
+        value: "nb"
+        label: "poi_id"
+        groups: "group"
+        time: "date"
+        units:
+          nb: " M€"
+        chartType: "stackedBarchart"
+        data:
+          date:
+            selector: "date"
+          query:
+            domain: "<%= report.id %>_32206_1"
+        legend: true
+        size: 0.7
+      }
+    ]
+    parent_id: 30
+    id: 3220622
+  }
+  {
+    title: "FX Rates"
+    source: 'Source: Bloomberg, <%= requestersManager.SCENARIOS.CURRENT %>'
+    level: 3
+    parent_id: 40
+    filters:
+      "bottom-right":
+        on: "filter"
+        type: "buttons"
+        order:
+          custom: [
+            "1Y"
+            "6M"
+            "3M"
+            "5D"
+          ]
+    id: 4039
+    chartOptions:
+      filters:
+        "upper-right":
+          reset: "All"
+          on: "variable"
+          type: "dropdown"
+      ticks:
+        tickFormat: "%x"
+      value: "value"
+      groups: "variable"
+      date: "date_clean"
+      chartType: "linechart"
+      data:
+        date:
+          selector: "date_clean"
+          format: "%Y%m%d"
+        query: [
+          [
+            {
+              $match:
+                domain: "marketdata_fxrates"
+            }
+            {
+              $sort:
+                date_clean: -1
+            }
+            {
+              $limit: 360
+            }
+            {
+              $project:
+                USD: 1
+                CHF: 1
+                NOK: 1
+                CNY: 1
+                filter:
+                  $literal: "1Y"
+                date_clean: 1
+                GBP: 1
+            }
+          ]
+          [
+            {
+              $match:
+                domain: "marketdata_fxrates"
+            }
+            {
+              $sort:
+                date_clean: -1
+            }
+            {
+              $limit: 180
+            }
+            {
+              $project:
+                USD: 1
+                CHF: 1
+                NOK: 1
+                CNY: 1
+                filter:
+                  $literal: "6M"
+                date_clean: 1
+                GBP: 1
+            }
+          ]
+          [
+            {
+              $match:
+                domain: "marketdata_fxrates"
+            }
+            {
+              $sort:
+                date_clean: -1
+            }
+            {
+              $limit: 90
+            }
+            {
+              $project:
+                USD: 1
+                CHF: 1
+                NOK: 1
+                CNY: 1
+                filter:
+                  $literal: "3M"
+                date_clean: 1
+                GBP: 1
+            }
+          ]
+          [
+            {
+              $match:
+                domain: "marketdata_fxrates"
+            }
+            {
+              $sort:
+                date_clean: -1
+            }
+            {
+              $limit: 30
+            }
+            {
+              $project:
+                USD: 1
+                CHF: 1
+                NOK: 1
+                CNY: 1
+                filter:
+                  $literal: "1M"
+                date_clean: 1
+                GBP: 1
+            }
+          ]
+        ]
+        multiple_queries: true
+        postprocess: [
+          {
+            melt:
+              id: [
+                "date_clean"
+                "filter"
+              ]
+              value: [
+                "USD"
+                "GBP"
+                "CHF"
+              ]
+          }
+        ]
+        precision:
+          value: ".4f"
+      legend: true
+  }
+  {
+    title: "Interest Rates"
+    source: 'Source: Bloomberg, <%= requestersManager.SCENARIOS.CURRENT %>'
+    level: 3
+    parent_id: 40
+    filters:
+      "bottom-right":
+        on: "filter"
+        type: "buttons"
+        order:
+          custom: [
+            "1Y"
+            "6M"
+            "3M"
+            "5D"
+          ]
+    id: 4032
+    chartOptions:
+      filters:
+        "upper-right":
+          reset: "All"
+          on: "Label"
+          type: "dropdown"
+      value: "Value"
+      units:
+        date: " "
+        Value: "%"
+      groups: "Label"
+      date: "Date"
+      chartType: "linechart"
+      data:
+        date:
+          format: "%d/%m/%Y"
+          selector: "Date"
+        query:
+          domain: "marketdata_interestrates"
+        precision:
+          Value: ".4f"
+      legend: true
+  }
+]
