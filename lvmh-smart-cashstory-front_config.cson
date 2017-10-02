@@ -200,7 +200,7 @@ slides: [
               domain: "positions_all"
               "ENTITIES":"<%= report.entityName %>"
               "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
-              "Pack":"Ranking by Segments"
+              "Pack":"Ranking by Entities"
           ,
             $group:
               _id:null
@@ -304,7 +304,7 @@ slides: [
               domain: "positions_all"
               "ENTITIES":"<%= report.entityName %>"
               "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
-              "Pack":"Ranking by Segments"
+              "Pack":"Ranking by Entities"
               "COA_L1":"Cash positions"
           ,
             $group:
