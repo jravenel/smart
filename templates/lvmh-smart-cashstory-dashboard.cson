@@ -173,7 +173,7 @@ categories: [
           variation: "evol"
           data:
             query:
-              domain: "positions_all"
+              domain: "dashboards_top"
               Entity_name: "{{ Entity_name }}"
               Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
               COA_L1: "Cash positions"
@@ -200,7 +200,7 @@ categories: [
               domain: "dashboards_top"
               Entity_name: "{{ Entity_name }}"
               Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
-              COA_L1: "External Debt"
+              COA_L1: "Financial assets"
           value: "value"
           # sort:
           #   by: "label"
@@ -213,7 +213,7 @@ categories: [
   {
     kpis: [
       {
-        name: "⭕Debt position"
+        name: "🛑Debt position"
         sentiment:
           value:
             domain: [
@@ -359,7 +359,7 @@ categories: [
               domain: "dashboards_top"
               Entity_name: "{{ Entity_name }}"
               Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
-              COA_L1: "Financial Assets"
+              COA_L1: "External debt"
           value: "value"
           label: "label"
       }
@@ -378,7 +378,7 @@ categories: [
               domain: "dashboards_top"
               Entity_name: "{{ Entity_name }}"
               Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
-              COA_L1: "External Debt"
+              COA_L1: "Credit Facilities"
           value: "value"
           # sort:
           #   by: "label"
