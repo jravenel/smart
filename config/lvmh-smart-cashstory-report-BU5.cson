@@ -1,0 +1,21 @@
+﻿search:
+  hierarchy: false
+  placeholder: "Search BG, BU, Entity"
+name: "report-BU5"
+entityName: "{{ Entity_name }}"
+entityGroup: "{{ BU }}"
+execsumNote: "@CashStory</br>Financial Reporting Assistant"
+background:
+  assetName: "OTHER_ACTIVITIES"
+  overlay: false
+date:
+  query:
+    domain: "scenarios"
+  showInHeader: true
+  type: "dropdown"
+  id: "SCENARIOS"
+  completeObjectMode: true
+  fields: [
+    "CURRENT"
+  ]
+id: "{{ index }}"

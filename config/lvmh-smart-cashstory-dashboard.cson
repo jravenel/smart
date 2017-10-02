@@ -1,0 +1,324 @@
+﻿report: "{{ report_id }}"
+default: true
+entityName: "{{ Entity_name }}"
+id: "{{ index }}"
+categories: [
+  {
+    kpis: [
+      {
+        type: "media-video"
+        id: "NVrbHJl7u3g"
+        provider: "youtube"
+      }
+      {
+        content:"comments" 
+        type: "text-dynamic"
+        data:
+          query:
+            # report: "<%= report.entityName %>"
+            domain:"comments"
+        name: "Read me"
+      }
+      {
+        type: "separator"
+      } 
+      {
+        name: "Cash positions"
+        sentiment:
+          value:
+            domain: [
+              0
+            ]
+            range: [
+              "negative"
+              "positive"
+            ]
+        type: "value-dynamic"
+        precision:
+          value: ",.1f"
+          evolution: "+,.1%"
+        value: "value"
+        source: "Group Monthly Financial Report"
+        slide: 101
+        badge: 'evolution'
+        comment: "<%=\' \' + evolution + \' vs last report\'%>"
+        sentiment:
+          evolution:
+            domain: [0]
+            range: ['negative','positive']
+        data:
+          value:
+            query:
+              domain: "dashboards"
+              Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
+              Entity_name: "{{ Entity_name }}"
+            field: "CashAccounts"
+          value_previous:
+            query:
+              domain: "dashboards"
+              Period: "<%= requestersManager.SCENARIOS.PREVIOUS %>"
+              Entity_name: "{{ Entity_name }}"
+            field: "CashAccounts"
+        compute:
+          evolution:"value/value_previous -1"
+        unit: "M€"
+      }
+      {
+        name: "Financial assets"
+        sentiment:
+          value:
+            domain: [
+              0
+            ]
+            range: [
+              "positive"
+              "negative"
+            ]
+        type: "value-dynamic"
+        precision:
+          value: ",.1f"
+          evolution: "+,.1%"
+        value: "value"
+        source: "Group Monthly Financial Report"
+        slide: 102
+        badge: 'evolution'
+        comment: "<%=\' \' + evolution + \' vs last report\'%>"
+        sentiment:
+          evolution:
+            domain: [0]
+            range: ['negative','positive']
+        data:
+          value:
+            query:
+              domain: "dashboards"
+              Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
+              Entity_name: "{{ Entity_name }}"
+            field: "Placements"
+          value_previous:
+            query:
+              domain: "dashboards"
+              Period: "<%= requestersManager.SCENARIOS.PREVIOUS %>"
+              Entity_name: "{{ Entity_name }}"
+            field: "Placements"
+        compute:
+          evolution:"value/value_previous -1"
+        unit: "M€"
+      }
+      {
+        name: "External debt"
+        type: "value-dynamic"
+        precision:
+          value: ",.1f"
+          evolution: "+,.1%"
+        value: "value"
+        source: "Group Monthly Financial Report"
+        slide: 1031
+        badge: 'evolution'
+        comment: "<%=\' \' + evolution + \' vs last report\'%>"
+        sentiment:
+          evolution:
+            domain: [0]
+            range: ['negative','positive']
+        data:
+          value:
+            query:
+              domain: "dashboards"
+              Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
+              Entity_name: "{{ Entity_name }}"
+            field: "FinancialDebt"
+          value_previous:
+            query:
+              domain: "dashboards"
+              Period: "<%= requestersManager.SCENARIOS.PREVIOUS %>"
+              Entity_name: "{{ Entity_name }}"
+            field: "FinancialDebt"
+        compute:
+          evolution:"value/value_previous -1"
+        unit: "M€"
+      }
+      {
+        source: "Group Monthly Financial Report"
+        slide: 3032
+        type: "leaderboard"
+        name: "Top 3 | Cash Positions"
+        chartOptions:
+          units:
+            value: " M€"
+            evol: " M€"
+          variation: "evol"
+          data:
+            query:
+              domain: "dashboards_top"
+              Entity_name: "{{ Entity_name }}"
+              Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
+              COA_L1: "Cash Positions"
+          value: "value"
+          label: "label"
+      }
+      {
+        source: "Group Monthly Financial Report"
+        slide: 3032
+        type: "leaderboard"
+        name: "Top 3 | Financial Assets"
+        chartOptions:
+          units:
+            value: " M€"
+            evol: " M€"
+          variation: "evol"
+          data:
+            query:
+              domain: "dashboards_top"
+              Entity_name: "{{ Entity_name }}"
+              Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
+              COA_L1: "Financial Assets"
+          value: "value"
+          label: "label"
+      }
+      {
+        # source: "Group Monthly Financial Report"
+        slide: 3032
+        type: "leaderboard"
+        name: "Top 3 | External Debt"
+        chartOptions:
+          units:
+            value: " M€"
+            evol: " M€"
+          variation: "evol"
+          data:
+            query:
+              domain: "dashboards_top"
+              Entity_name: "{{ Entity_name }}"
+              Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
+              COA_L1: "External Debt"
+          value: "value"
+          # sort:
+          #   by: "label"
+          #   order: "desc"
+          label: "label"
+      }
+    ]
+    name: "Treasury Indicators"
+  }
+  {
+    kpis: [
+      {
+        source: "Group Monthly Financial Report"
+        slide: 3032
+        type: "leaderboard"
+        name: "Cash Pool"
+        chartOptions:
+          units:
+            value: "%"
+          data:
+            query:
+              domain: "dashboard_cashperf"
+          value: "value"
+          label: "label"
+      }
+      {
+        source: "Group Treasury"
+        type: "line"
+        name: "Cost of Debt"
+        chartOptions:
+          units:
+            value: "%"
+          date: "date"
+          data:
+            query:
+              breakdown: "Actuals"
+              domain: "dashboard_performance_netposition"
+            precision:
+              value: ".1f"
+          value: "value"
+          label: "label"
+      }
+      {
+        source: "Group Treasury + Controlling"
+        chartOptions:
+          units:
+            value: "M€"
+          date: "date"
+          data:
+            query:
+              domain: "dashboard_performance_fcf"
+          value: "value"
+          label: "label"
+        type: "line"
+        name: "Free Cash Flow"
+        unit: "M€"
+      }
+    ]
+    name: "Financial Performance"
+  }
+  {
+    kpis: [
+      {
+        name: "Capital"
+        sentiment:
+          value:
+            domain: [
+              0
+            ]
+            range: [
+              "negative"
+              "positive"
+            ]
+        type: "value-dynamic"
+        precision:
+          value: ",.1f"
+        value: "value"
+        source: "Balance sheet"
+        data:
+          value:
+            query:
+              domain: "dashboards"
+              Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
+              Entity_name: "<%= report.entityName %>"
+            field: "Capital"
+        unit: "M€"
+      }
+      {
+        name: "Net Financial Debt"
+        sentiment:
+          value:
+            domain: [
+              0
+            ]
+            range: [
+              "positive"
+              "negative"
+            ]
+        type: "value-dynamic"
+        precision:
+          value: ",.1f"
+        value: "value"
+        source: "from Group Treasury"
+        data:
+          value:
+            query:
+              domain: "dashboards"
+              Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
+              Entity_name: "{{ Entity_name }}"
+            field: "NetFinancialDebt"
+        unit: "M€"
+      }
+      {
+        name: "Gearing"
+        type: "value-dynamic"
+        precision:
+          value: ",.1f"
+        value: "value"
+        source: "Your Treasury Management Software"
+        data:
+          value:
+            query:
+              domain: "dashboards"
+              Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
+              Entity_name: "{{ Entity_name }}"
+            field: "Gearing"
+        unit: "%"
+      }
+    ]
+    name: "Leverage"
+  }
+]
