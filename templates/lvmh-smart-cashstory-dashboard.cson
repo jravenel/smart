@@ -17,13 +17,15 @@ categories: [
           query:
             # report: "<%= report.entityName %>"
             domain:"comments"
-        name: "Read me"
+        name: "👑LVMH Smart Project"
       }
+    ]
+    name: "Overview"
+  }
+  {
+    kpis: [
       {
-        type: "separator"
-      } 
-      {
-        name: "Cash positions"
+        name: "✅ Treasury position"
         sentiment:
           value:
             domain: [
@@ -32,6 +34,46 @@ categories: [
             range: [
               "negative"
               "positive"
+            ]
+        type: "value-dynamic"
+        precision:
+          value: ",.1f"
+          evolution: "+,.1%"
+        value: "value"
+        source: "Group Monthly Financial Report"
+        badge: 'evolution'
+        comment: "<%=\' \' + evolution + \' vs last report\'%>"
+        sentiment:
+          evolution:
+            domain: [0]
+            range: ['negative','positive']
+        data:
+          value:
+            query:
+              domain: "dashboards"
+              Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
+              Entity_name: "{{ Entity_name }}"
+            field: "Treasury position"
+          value_previous:
+            query:
+              domain: "dashboards"
+              Period: "<%= requestersManager.SCENARIOS.PREVIOUS %>"
+              Entity_name: "{{ Entity_name }}"
+            field: "Treasury position"
+        compute:
+          evolution:"value/value_previous -1"
+        unit: "M€"
+      }
+      {
+        name: "Cash positions"
+        sentiment:
+          value:
+            domain: [
+              0
+            ]
+            range: [
+              "positive"
+              "negative"
             ]
         type: "value-dynamic"
         precision:
@@ -52,28 +94,19 @@ categories: [
               domain: "dashboards"
               Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
               Entity_name: "{{ Entity_name }}"
-            field: "CashAccounts"
+            field: "Cash positions"
           value_previous:
             query:
               domain: "dashboards"
               Period: "<%= requestersManager.SCENARIOS.PREVIOUS %>"
               Entity_name: "{{ Entity_name }}"
-            field: "CashAccounts"
+            field: "Cash positions"
         compute:
           evolution:"value/value_previous -1"
         unit: "M€"
       }
       {
         name: "Financial assets"
-        sentiment:
-          value:
-            domain: [
-              0
-            ]
-            range: [
-              "positive"
-              "negative"
-            ]
         type: "value-dynamic"
         precision:
           value: ",.1f"
@@ -93,45 +126,13 @@ categories: [
               domain: "dashboards"
               Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
               Entity_name: "{{ Entity_name }}"
-            field: "Placements"
+            field: "Financial assets"
           value_previous:
             query:
               domain: "dashboards"
               Period: "<%= requestersManager.SCENARIOS.PREVIOUS %>"
               Entity_name: "{{ Entity_name }}"
-            field: "Placements"
-        compute:
-          evolution:"value/value_previous -1"
-        unit: "M€"
-      }
-      {
-        name: "External debt"
-        type: "value-dynamic"
-        precision:
-          value: ",.1f"
-          evolution: "+,.1%"
-        value: "value"
-        source: "Group Monthly Financial Report"
-        slide: 1031
-        badge: 'evolution'
-        comment: "<%=\' \' + evolution + \' vs last report\'%>"
-        sentiment:
-          evolution:
-            domain: [0]
-            range: ['negative','positive']
-        data:
-          value:
-            query:
-              domain: "dashboards"
-              Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
-              Entity_name: "{{ Entity_name }}"
-            field: "FinancialDebt"
-          value_previous:
-            query:
-              domain: "dashboards"
-              Period: "<%= requestersManager.SCENARIOS.PREVIOUS %>"
-              Entity_name: "{{ Entity_name }}"
-            field: "FinancialDebt"
+            field: "Financial assets"
         compute:
           evolution:"value/value_previous -1"
         unit: "M€"
@@ -140,7 +141,7 @@ categories: [
         source: "Group Monthly Financial Report"
         slide: 3032
         type: "leaderboard"
-        name: "Top 3 | Cash Positions"
+        name: "🏅 Top 3 | Tresury position"
         chartOptions:
           units:
             value: " M€"
@@ -156,10 +157,15 @@ categories: [
           label: "label"
       }
       {
-        source: "Group Monthly Financial Report"
-        slide: 3032
+        linkTo:
+          type: 'slide'
+          id: 101
+          where:
+              entityName: "{{ Entity_name }}"
+          filters:
+              Breakdown: "Entities"
         type: "leaderboard"
-        name: "Top 3 | Financial Assets"
+        name: "🏅 Top 3 | Cash positions"
         chartOptions:
           units:
             value: " M€"
@@ -167,18 +173,23 @@ categories: [
           variation: "evol"
           data:
             query:
-              domain: "dashboards_top"
+              domain: "positions_all"
               Entity_name: "{{ Entity_name }}"
               Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
-              COA_L1: "Financial Assets"
+              COA_L1: "Cash positions"
           value: "value"
           label: "label"
       }
       {
-        # source: "Group Monthly Financial Report"
-        slide: 3032
+        linkTo:
+          type: 'slide'
+          id: 102
+          where:
+              entityName: "{{ Entity_name }}"
+          filters:
+              Breakdown: "Entities"
         type: "leaderboard"
-        name: "Top 3 | External Debt"
+        name: "🏅 Top 3 | Financial assets"
         chartOptions:
           units:
             value: " M€"
@@ -198,6 +209,184 @@ categories: [
       }
     ]
     name: "Treasury Indicators"
+  }
+  {
+    kpis: [
+      {
+        name: "⭕Debt position"
+        sentiment:
+          value:
+            domain: [
+              0
+            ]
+            range: [
+              "negative"
+              "positive"
+            ]
+        type: "value-dynamic"
+        precision:
+          value: ",.1f"
+          evolution: "+,.1%"
+        value: "value"
+        source: "Group Monthly Financial Report"
+        badge: 'evolution'
+        comment: "<%=\' \' + evolution + \' vs last report\'%>"
+        sentiment:
+          evolution:
+            domain: [0]
+            range: ['negative','positive']
+        data:
+          value:
+            query:
+              domain: "dashboards"
+              Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
+              Entity_name: "{{ Entity_name }}"
+            field: "Debt position"
+          value_previous:
+            query:
+              domain: "dashboards"
+              Period: "<%= requestersManager.SCENARIOS.PREVIOUS %>"
+              Entity_name: "{{ Entity_name }}"
+            field: "Debt position"
+        compute:
+          evolution:"value/value_previous -1"
+        unit: "M€"
+      }
+      {
+        name: "External debt"
+        sentiment:
+          value:
+            domain: [
+              0
+            ]
+            range: [
+              "positive"
+              "negative"
+            ]
+        type: "value-dynamic"
+        precision:
+          value: ",.1f"
+          evolution: "+,.1%"
+        value: "value"
+        source: "Group Monthly Financial Report"
+        slide: 103
+        badge: 'evolution'
+        comment: "<%=\' \' + evolution + \' vs last report\'%>"
+        sentiment:
+          evolution:
+            domain: [0]
+            range: ['negative','positive']
+        data:
+          value:
+            query:
+              domain: "dashboards"
+              Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
+              Entity_name: "{{ Entity_name }}"
+            field: "External debt"
+          value_previous:
+            query:
+              domain: "dashboards"
+              Period: "<%= requestersManager.SCENARIOS.PREVIOUS %>"
+              Entity_name: "{{ Entity_name }}"
+            field: "External debt"
+        compute:
+          evolution:"value/value_previous -1"
+        unit: "M€"
+      }
+      {
+        name: "Credit facilities"
+        type: "value-dynamic"
+        precision:
+          value: ",.1f"
+          evolution: "+,.1%"
+        value: "value"
+        source: "Group Monthly Financial Report"
+        slide: 104
+        badge: 'evolution'
+        comment: "<%=\' \' + evolution + \' vs last report\'%>"
+        sentiment:
+          evolution:
+            domain: [0]
+            range: ['negative','positive']
+        data:
+          value:
+            query:
+              domain: "dashboards"
+              Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
+              Entity_name: "{{ Entity_name }}"
+            field: "Credit Facilities"
+          value_previous:
+            query:
+              domain: "dashboards"
+              Period: "<%= requestersManager.SCENARIOS.PREVIOUS %>"
+              Entity_name: "{{ Entity_name }}"
+            field: "Credit Facilities"
+        compute:
+          evolution:"value/value_previous -1"
+        unit: "M€"
+      }
+      {
+        source: "Group Monthly Financial Report"
+        slide: 3032
+        type: "leaderboard"
+        name: "🏅 Top 3 | Debt position"
+        chartOptions:
+          units:
+            value: " M€"
+            evol: " M€"
+          variation: "evol"
+          data:
+            query:
+              domain: "dashboards_top"
+              Entity_name: "{{ Entity_name }}"
+              Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
+              COA_L1: "Cash Positions"
+          value: "value"
+          label: "label"
+      }
+      {
+        source: "Group Monthly Financial Report"
+        slide: 3032
+        type: "leaderboard"
+        name: "🏅 Top 3 | External debt"
+        chartOptions:
+          units:
+            value: " M€"
+            evol: " M€"
+          variation: "evol"
+          data:
+            query:
+              domain: "dashboards_top"
+              Entity_name: "{{ Entity_name }}"
+              Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
+              COA_L1: "Financial Assets"
+          value: "value"
+          label: "label"
+      }
+      {
+        # source: "Group Monthly Financial Report"
+        slide: 3032
+        type: "leaderboard"
+        name: "🏅 Top 3 | Credit facilities"
+        chartOptions:
+          units:
+            value: " M€"
+            evol: " M€"
+          variation: "evol"
+          data:
+            query:
+              domain: "dashboards_top"
+              Entity_name: "{{ Entity_name }}"
+              Period: "<%= requestersManager.SCENARIOS.CURRENT %>"
+              COA_L1: "External Debt"
+          value: "value"
+          # sort:
+          #   by: "label"
+          #   order: "desc"
+          label: "label"
+      }
+    ]
+    name: "Debt Indicators"
   }
   {
     kpis: [
@@ -279,6 +468,7 @@ categories: [
       }
       {
         name: "Net Financial Debt"
+        slide:101
         sentiment:
           value:
             domain: [

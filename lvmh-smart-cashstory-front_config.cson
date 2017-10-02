@@ -100,17 +100,17 @@ slides: [
     level: 0
   }
   {
-    title: "Treasury"
+    title: "Treasury & Debt"
     id: 10
     level: 1
   }
   {
-    title: "(Zoom) Treasury"
+    title: "(Zoom) Treasury & Debt"
     id: 20
     level: 0
   }
   {
-    title: "Financial Debt"
+    title: "Other indicators"
     id: 30
     level: 1
   }
@@ -130,7 +130,7 @@ slides: [
   }
   {
     id: 100
-    title: "All"
+    title: "⭐ Net Financial Debt"
     level: 3
     parent_id: 10
     linkTo: [
@@ -179,7 +179,7 @@ slides: [
           domain: "positions_all"
           "ENTITIES":"<%= report.entityName %>"
           "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
-          # "Pack":"Ranking by Segments"
+          # "Pack":"Ranking by Entities"
         precision:
           Value: ",.1f"
           Growth: ",.1f"
@@ -228,7 +228,7 @@ slides: [
         #   ]
         #   field: "Growth"
       precision:
-        value: ',.2f'
+        value: ',.1f'
         comparison: '+,.0%'
     ]
   }
@@ -284,7 +284,7 @@ slides: [
           "ENTITIES":"<%= report.entityName %>"
           "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
           "COA_L1":"Cash positions"
-          # "Pack":"Ranking by Segments"
+          # "Pack":"Ranking by Entities"
         precision:
           Value: ",.1f"
     highlightedKpis:[
@@ -333,13 +333,13 @@ slides: [
         #   ]
         #   field: "Growth"
       precision:
-        value: ',.2f'
+        value: ',.1f'
         comparison: '+,.0%'
     ]
   }
   {
     id: 102
-    title: "Financial Assets"
+    title: "Financial assets"
     level: 3
     parent_id: 10
     linkTo: [
@@ -389,7 +389,7 @@ slides: [
           "ENTITIES":"<%= report.entityName %>"
           "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
           "COA_L1":"Financial assets"
-          # "Pack":"Ranking by Segments"
+          # "Pack":"Ranking by Entities"
         precision:
           Value: ",.1f"
     highlightedKpis:[
@@ -409,8 +409,218 @@ slides: [
               domain: "positions_all"
               "ENTITIES":"<%= report.entityName %>"
               "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
-              "Pack":"Ranking by Segments"
+              "Pack":"Ranking by Entities"
               "COA_L1":"Financial assets"
+          ,
+            $group:
+              _id:null
+              value:$sum:"$Value"
+          ,
+            $project:
+              value:1
+          ]
+          field: "value"
+
+        # comparison:
+        #   query:[
+        #       domain: "positions_bybanks"
+        #       "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+        #       "ENTITIES":"<%= report.entityName %>"
+        #       "COA_L1":"<%= requestersManager.branchrequest0 %>"
+        #       "COUNTERPART_L1":"<%= requestersManager.branchrequest0A %>"
+        #   ,
+        #     $group:
+        #       _id:null
+        #       value:$sum:"$Value"
+        #   ,
+        #     $project:
+        #       value:1
+        #   ]
+        #   field: "Growth"
+      precision:
+        value: ',.1f'
+        comparison: '+,.0%'
+    ]
+  }
+  {
+    id: 103
+    title: "External debt"
+    level: 3
+    parent_id: 10
+    linkTo: [
+      {
+        type: "dashboard"
+        id: 0
+        legend: "<i class=\"fa fa-search-minus\" aria-hidden=\"true\"></i>"
+      }
+      {
+        type: "slide"
+        id: 1001
+        legend: "<i class=\"fa fa-search-plus\" aria-hidden=\"true\"></i>"
+      }
+    ]
+    source: 'Source: SyRUS Corporate Finance, <%= requestersManager.SCENARIOS.CURRENT %>'
+    filters:
+      "bottom-right":
+        on: "Breakdown"
+        type: "buttons"
+    chartOptions:
+      requesters:
+        "upper-right":
+          id:"nature"
+          query: 
+            domain: "positions_all"
+          fields:[
+              "COA_L1"
+          ]
+          type: "dropdown"
+      sort: "desc"
+      packs: "Pack"
+      value: "Value"
+      label: "Label"
+      packNames: true
+      # variationLegend: "Evolution<br>vs m-1"
+      variation: "Growth"
+      sparklines:
+        prefix: "sparkline"
+        legend: "Monthly Evolution"
+        unit: " "
+      units:
+        Value: " M€"
+      chartType: "horizontalBarchart"
+      data:
+        query:
+          domain: "positions_all"
+          "ENTITIES":"<%= report.entityName %>"
+          "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+          "COA_L1":"External debt"
+          # "Pack":"Ranking by Entities"
+        precision:
+          Value: ",.1f"
+    highlightedKpis:[
+      name: "Total"
+      unit:" M€"
+      badge: 'evolution'
+      # comment: "<%=\' \' + comparison  %>"
+      sentiment:
+        comparison:
+          domain: [0]
+          range: ['negative','positive']
+      value: "value"
+      data:
+        value:
+          query:[
+            $match:
+              domain: "positions_all"
+              "ENTITIES":"<%= report.entityName %>"
+              "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+              "Pack":"Ranking by Entities"
+              "COA_L1":"External debt"
+          ,
+            $group:
+              _id:null
+              value:$sum:"$Value"
+          ,
+            $project:
+              value:1
+          ]
+          field: "value"
+
+        # comparison:
+        #   query:[
+        #       domain: "positions_bybanks"
+        #       "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+        #       "ENTITIES":"<%= report.entityName %>"
+        #       "COA_L1":"<%= requestersManager.branchrequest0 %>"
+        #       "COUNTERPART_L1":"<%= requestersManager.branchrequest0A %>"
+        #   ,
+        #     $group:
+        #       _id:null
+        #       value:$sum:"$Value"
+        #   ,
+        #     $project:
+        #       value:1
+        #   ]
+        #   field: "Growth"
+      precision:
+        value: ',.1f'
+        comparison: '+,.0%'
+    ]
+  }
+  {
+    id: 104
+    title: "Credit Facilities"
+    level: 3
+    parent_id: 10
+    linkTo: [
+      {
+        type: "dashboard"
+        id: 0
+        legend: "<i class=\"fa fa-search-minus\" aria-hidden=\"true\"></i>"
+      }
+      {
+        type: "slide"
+        id: 1001
+        legend: "<i class=\"fa fa-search-plus\" aria-hidden=\"true\"></i>"
+      }
+    ]
+    source: 'Source: SyRUS Corporate Finance, <%= requestersManager.SCENARIOS.CURRENT %>'
+    filters:
+      "bottom-right":
+        on: "Breakdown"
+        type: "buttons"
+    chartOptions:
+      requesters:
+        "upper-right":
+          id:"nature"
+          query: 
+            domain: "positions_all"
+          fields:[
+              "COA_L1"
+          ]
+          type: "dropdown"
+      sort: "desc"
+      packs: "Pack"
+      value: "Value"
+      label: "Label"
+      packNames: true
+      # variationLegend: "Evolution<br>vs m-1"
+      variation: "Growth"
+      sparklines:
+        prefix: "sparkline"
+        legend: "Monthly Evolution"
+        unit: " "
+      units:
+        Value: " M€"
+      chartType: "horizontalBarchart"
+      data:
+        query:
+          domain: "positions_all"
+          "ENTITIES":"<%= report.entityName %>"
+          "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+          "COA_L1":"Credit Facilities"
+          # "Pack":"Ranking by Entities"
+        precision:
+          Value: ",.1f"
+    highlightedKpis:[
+      name: "Total"
+      unit:" M€"
+      badge: 'evolution'
+      # comment: "<%=\' \' + comparison  %>"
+      sentiment:
+        comparison:
+          domain: [0]
+          range: ['negative','positive']
+      value: "value"
+      data:
+        value:
+          query:[
+            $match:
+              domain: "positions_all"
+              "ENTITIES":"<%= report.entityName %>"
+              "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
+              "Pack":"Ranking by Entities"
+              "COA_L1":"Credit Facilities"
           ,
             $group:
               _id:null
