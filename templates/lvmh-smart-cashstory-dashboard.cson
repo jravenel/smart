@@ -141,7 +141,7 @@ categories: [
         source: "Group Monthly Financial Report"
         slide: 3032
         type: "leaderboard"
-        name: "🏅 Top 3 | Tresury position"
+        name: "Top 3 | Tresury position"
         chartOptions:
           units:
             value: " M€"
@@ -165,7 +165,7 @@ categories: [
           filters:
               Breakdown: "Entities"
         type: "leaderboard"
-        name: "🏅 Top 3 | Cash positions"
+        name: "Top 3 | Cash positions"
         chartOptions:
           units:
             value: " M€"
@@ -189,7 +189,7 @@ categories: [
           filters:
               Breakdown: "Entities"
         type: "leaderboard"
-        name: "🏅 Top 3 | Financial assets"
+        name: "Top 3 | Financial assets"
         chartOptions:
           units:
             value: " M€"
@@ -329,7 +329,7 @@ categories: [
         source: "Group Monthly Financial Report"
         slide: 3032
         type: "leaderboard"
-        name: "🏅 Top 3 | Debt position"
+        name: "Top 3 | Debt position"
         chartOptions:
           units:
             value: " M€"
@@ -367,7 +367,7 @@ categories: [
         # source: "Group Monthly Financial Report"
         slide: 3032
         type: "leaderboard"
-        name: "🏅 Top 3 | Credit facilities"
+        name: "Top 3 | Credit facilities"
         chartOptions:
           units:
             value: " M€"
@@ -415,7 +415,7 @@ categories: [
           data:
             query:
               breakdown: "Actuals"
-              domain: "dashboard_performance_netposition"
+              domain: "dashboard_cod"
             precision:
               value: ".1f"
           value: "value"

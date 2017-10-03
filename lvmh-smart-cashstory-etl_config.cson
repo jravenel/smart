@@ -4,214 +4,207 @@
     domain: "dashboards"
 DATA_SOURCES: [
   {
+    cache:true
     sheetname: "dashboards"
     domain: "dashboards"
     type: "excel"
-    file: "Cash_Positions.xls"
+    file: "Datasources_cashstory.xls"
   }
   {
+    cache:true
     sheetname: "comments"
     domain: "comments"
     type: "excel"
-    file: "Cash_Positions.xls"
+    file: "Datasources_cashstory.xls"
   }
   {
+    cache:true
     sheetname: "scenarios"
     domain: "scenarios"
     type: "excel"
-    file: "Cash_Positions.xls"
+    file: "Datasources_cashstory.xls"
   }
   {
+    cache:true
     sheetname: "dashboards_top"
     domain: "dashboards_top"
     type: "excel"
-    file: "Cash_Positions.xls"
+    file: "Datasources_cashstory.xls"
   }
   {
+    cache:true
     sheetname: "positions_bycurrencies"
     domain: "positions_bycurrencies"
     type: "excel"
-    file: "Cash_Positions.xls"
+    file: "Datasources_cashstory.xls"
   }
   {
+    cache:true
     sheetname: "positions_bybanks"
     domain: "positions_bybanks"
     type: "excel"
-    file: "Cash_Positions.xls"
+    file: "Datasources_cashstory.xls"
   }
   {
+    cache:true
     sheetname: "positions_total_bg"
     domain: "positions_total_bg"
     type: "excel"
-    file: "Cash_Positions.xls"
+    file: "Datasources_cashstory.xls"
   }
   {
+    cache:true
     sheetname: "positions_total_treasury"
     domain: "positions_total_treasury"
     type: "excel"
-    file: "Cash_Positions.xls"
+    file: "Datasources_cashstory.xls"
   }
   {
+    cache:true
     sheetname: "gearing"
     domain: "gearing"
     type: "excel"
-    file: "Cash_Positions.xls"
+    file: "Datasources_cashstory.xls"
   }
   {
+    cache:true
     sheetname: "positions_all"
     domain: "positions_all"
     type: "excel"
-    file: "Cash_Positions.xls"
+    file: "Datasources_cashstory.xls"
   }
   {
+    cache:true
     sheetname: "positions_byBusinessGroup"
     domain: "positions_byBusinessGroup"
     type: "excel"
-    file: "Cash_Positions.xls"
+    file: "Datasources_cashstory.xls"
   }
   {
+    cache:true
     sheetname: "0_32206_0"
     domain: "0_32206_0"
     type: "excel"
-    file: "External_Debt.xls"
+    file: "Datasources_cashstory.xls"
   }
   {
+    cache:true
     sheetname: "0_32206_1"
     domain: "0_32206_1"
     type: "excel"
-    file: "External_Debt.xls"
+    file: "Datasources_cashstory.xls"
   }
   {
+    cache:true
     sheetname: "entities"
     domain: "entities"
     type: "excel"
-    file: "Cash_Positions.xls"
+    file: "Datasources_cashstory.xls"
   }
   {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
-    sheetname: "hb_drill"
-    domain: "hb_drill"
-    type: "google_spreadsheet"
-  }
-  {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
-    sheetname: "barlines_bars"
-    domain: "barlines_bars"
-    type: "google_spreadsheet"
-  }
-  {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
-    sheetname: "barlines_lines"
-    domain: "barlines_lines"
-    type: "google_spreadsheet"
-  }
-  {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
+    cache:true
+    file: "Datasources_cashstory.xls"
     sheetname: "dashboard_cashperf"
     domain: "dashboard_cashperf"
-    type: "google_spreadsheet"
+    type: "excel"
   }
   {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
-    sheetname: "dashboard_leverage"
-    domain: "dashboard_leverage"
-    type: "google_spreadsheet"
-  }
-  {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
-    sheetname: "time_selection"
-    domain: "time_selection"
-    type: "google_spreadsheet"
-  }
-  {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
+    cache:true
+    file: "Datasources_cashstory.xls"
     sheetname: "dashboard_performance_fcf"
     domain: "dashboard_performance_fcf"
-    type: "google_spreadsheet"
+    type: "excel"
   }
   {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
-    sheetname: "dashboard_performance_netposition"
-    domain: "dashboard_performance_netposition"
-    type: "google_spreadsheet"
+    cache:true
+    file: "Datasources_cashstory.xls"
+    sheetname: "dashboard_cod"
+    domain: "dashboard_cod"
+    type: "excel"
   }
   {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
+    cache:true
+    file: "Datasources_cashstory.xls"
     sheetname: "positions_accounts"
     domain: "positions_accounts"
-    type: "google_spreadsheet"
+    type: "excel"
   }
-  # {
-  #   spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
-  #   sheetname: "positions_bycurrencies"
-  #   domain: "positions_bycurrencies"
-  #   type: "google_spreadsheet"
-  # }
   {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
+    cache:true
+    file: "Datasources_cashstory.xls"
     sheetname: "positions_bycountries"
     domain: "positions_bycountries"
-    type: "google_spreadsheet"
+    type: "excel"
   }
   {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
+    cache:true
+    file: "Datasources_cashstory.xls"
     sheetname: "positions_byregions_linechart"
     domain: "positions_byregions_linechart"
-    type: "google_spreadsheet"
+    type: "excel"
   }
   {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
-    sheetname: "positions_byregions_horizontalBarchart"
-    domain: "positions_byregions_horizontalBarchart"
-    type: "google_spreadsheet"
+    cache:true
+    file: "Datasources_cashstory.xls"
+    sheetname: "positions_byregions_hBarchart"
+    domain: "positions_byregions_hBarchart"
+    type: "excel"
   }
   {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
-    sheetname: "flows_directcashflow_waterfall"
-    domain: "flows_directcashflow_waterfall"
-    type: "google_spreadsheet"
+    cache:true
+    file: "Datasources_cashstory.xls"
+    sheetname: "flows_waterfall"
+    domain: "flows_waterfall"
+    type: "excel"
   }
   {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
-    sheetname: "flows_bankvolume_bubblechart"
-    domain: "flows_bankvolume_bubblechart"
-    type: "google_spreadsheet"
+    cache:true
+    file: "Datasources_cashstory.xls"
+    sheetname: "flows_bubblechart"
+    domain: "flows_bubblechart"
+    type: "excel"
   }
   {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
+    cache:true
+    file: "Datasources_cashstory.xls"
     sheetname: "flows_indirectCF"
     domain: "flows_indirectCF"
-    type: "google_spreadsheet"
+    type: "excel"
   }
   {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
-    sheetname: "analysis_profitability_heatmap"
-    domain: "analysis_profitability_heatmap"
-    type: "google_spreadsheet"
+    cache:true
+    file: "Datasources_cashstory.xls"
+    sheetname: "analysis_heatmap"
+    domain: "analysis_heatmap"
+    type: "excel"
   }
   {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
+    cache:true
+    file: "Datasources_cashstory.xls"
     sheetname: "analysis_workingcapkpis"
     domain: "analysis_workingcapkpis"
-    type: "google_spreadsheet"
+    type: "excel"
   }
   {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
+    cache:true
+    file: "Datasources_cashstory.xls"
     sheetname: "cashtrapped"
     domain: "cashtrapped"
-    type: "google_spreadsheet"
+    type: "excel"
   }
   {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
+    cache:true
+    file: "Datasources_cashstory.xls"
     sheetname: "marketdata_interestrates"
     domain: "marketdata_interestrates"
-    type: "google_spreadsheet"
+    type: "excel"
   }
   {
-    spreadsheet_id: "1uohuJalTpI0tYVI6QHuver04qRkeSAkE8Sw1SA4UhpY"
+    cache:true
+    file: "Datasources_cashstory.xls"
     sheetname: "marketdata_fxrates"
     domain: "marketdata_fxrates"
-    type: "google_spreadsheet"
+    type: "excel"
   }
 ]
 MONGO_INDEXES: [
