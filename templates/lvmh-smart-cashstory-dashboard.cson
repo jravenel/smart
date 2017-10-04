@@ -17,7 +17,7 @@ categories: [
           query:
             # report: "<%= report.entityName %>"
             domain:"comments"
-        name: "👑LVMH Smart Project"
+        name: "Smart Project"
       }
     ]
     name: "Overview"
@@ -25,7 +25,7 @@ categories: [
   {
     kpis: [
       {
-        name: "✅ Treasury position"
+        name: "✅ Treasury"
         sentiment:
           value:
             domain: [
@@ -141,7 +141,7 @@ categories: [
         source: "Group Monthly Financial Report"
         slide: 3032
         type: "leaderboard"
-        name: "Top 3 | Tresury position"
+        name: "⬇️ Top 3"
         chartOptions:
           units:
             value: " M€"
@@ -165,7 +165,7 @@ categories: [
           filters:
               Breakdown: "Entities"
         type: "leaderboard"
-        name: "Top 3 | Cash positions"
+        name: "⬇️ Top 3"
         chartOptions:
           units:
             value: " M€"
@@ -189,7 +189,7 @@ categories: [
           filters:
               Breakdown: "Entities"
         type: "leaderboard"
-        name: "Top 3 | Financial assets"
+        name: "⬇️ Top 3"
         chartOptions:
           units:
             value: " M€"
@@ -213,7 +213,7 @@ categories: [
   {
     kpis: [
       {
-        name: "🛑Debt position"
+        name: "🛑 Debt"
         sentiment:
           value:
             domain: [
@@ -329,7 +329,7 @@ categories: [
         source: "Group Monthly Financial Report"
         slide: 3032
         type: "leaderboard"
-        name: "Top 3 | Debt position"
+        name: "⬇️Top 3"
         chartOptions:
           units:
             value: " M€"
@@ -348,7 +348,7 @@ categories: [
         source: "Group Monthly Financial Report"
         slide: 3032
         type: "leaderboard"
-        name: "🏅 Top 3 | External debt"
+        name: "⬇️ Top 3"
         chartOptions:
           units:
             value: " M€"
@@ -367,7 +367,7 @@ categories: [
         # source: "Group Monthly Financial Report"
         slide: 3032
         type: "leaderboard"
-        name: "Top 3 | Credit facilities"
+        name: "⬇️ Top 3"
         chartOptions:
           units:
             value: " M€"

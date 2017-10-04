@@ -670,12 +670,22 @@ slides: [
       }
     ]
     source: 'Source: SyRUS Corporate Finance, <%= requestersManager.SCENARIOS.CURRENT %>'
-    filters:
+    requesters:
       "bottom-right":
-        on: "CURRENCIES"
+        id:"typefilter"
+        query: domain: "positions_bybanks"
+        fields:[
+            "COA_L1"
+        ]
         type: "buttons"
+        order:
+          custom: [
+            "Cash positions",
+            "Financial assets",
+            "External debt",
+            "Credit Facilities",
+          ]
     chartOptions:
-      sort: "desc"
       variation: "Growth"
       sentiment:
         value:
@@ -687,25 +697,18 @@ slides: [
             "warning"
             "positive"
           ]
+      # packs: "COUNTERPARTS"
+      # packNames: true
       value: "Value"
-      label: "COUNTERPART_L2"
-      meta: [
-        "Cash Positions"
-        "Financial Assets"
-      ]
+      sort: "desc"
+      label: "LABEL"
       requesters:
-        "upper-right":
-          id:"branchrequest0"
-          query: domain: "positions_bybanks"
-          fields:[
-              "COA_L1"
-          ]
-          type: "dropdown"
         "upper-middle":
           id:"branchrequest0A"
           query: domain: "positions_bybanks"
+          reset:"CURRENCY"
           fields:[
-              "COUNTERPART_L1"
+              "CURRENCY"
           ]
           type: "dropdown"  
       units:
@@ -719,12 +722,12 @@ slides: [
           domain: "positions_bybanks"
           "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
           "ENTITIES":"<%= report.entityName %>"
-          "COA_L1":"<%= requestersManager.branchrequest0 %>"
-          "COUNTERPART_L1":"<%= requestersManager.branchrequest0A %>"
+          "COA_L1":"<%= requestersManager.typefilter %>"
+          # "COUNTERPARTS":"<%= requestersManager.branchrequest0A %>"
         precision:
           Growth: ".1f"
           Value: ",.1f"
-      legend: true
+      # legend: true
     highlightedKpis:[
       name: "Total"
       unit:" M€"
@@ -741,8 +744,8 @@ slides: [
               domain: "positions_bybanks"
               "SCENARIOS":"<%= requestersManager.SCENARIOS.CURRENT %>"
               "ENTITIES":"<%= report.entityName %>"
-              "COA_L1":"<%= requestersManager.branchrequest0 %>"
-              "COUNTERPART_L1":"<%= requestersManager.branchrequest0A %>"
+              "COA_L1":"<%= requestersManager.typefilter %>"
+              # "COUNTERPARTS":"<%= requestersManager.branchrequest0A %>"
           ,
             $group:
               _id:null
@@ -1188,7 +1191,6 @@ slides: [
       chartType: "linechart"
       data:
         date:
-          format: "%d/%m/%Y"
           selector: "Date"
         query:
           domain: "marketdata_interestrates"
